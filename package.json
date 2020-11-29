@@ -1,6 +1,6 @@
 {
   "name": "react-hive-flow",
-  "version": "1.0.47",
+  "version": "1.0.48",
   "description": "Hive Flow maker for React",
   "author": "balbatross",
   "license": "MIT",
@@ -55,6 +55,7 @@
     "@material-ui/icons": "^4.9.1",
     "@thetechcompany/react-flow-renderer": "^8.0.0",
     "react-flow-renderer": "^8.0.0",
+    "react-tappable": "^1.0.4",
     "uuid": "^8.3.1",
     "with-context": "^0.0.3"
   }
