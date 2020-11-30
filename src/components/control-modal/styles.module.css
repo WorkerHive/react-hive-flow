@@ -1,0 +1,32 @@
+.controlMenuOption {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 12px;
+  border-radius: 7px;
+  background: #dfdfdf;
+  margin-bottom: 8px;
+  cursor: pointer;
+}
+
+.controlMenuOption:hover{
+  background: #efefef;
+}
+
+.controlModal{
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+}
+
+.controlBody{
+  display: flex;
+  flex-direction: column;
+  flex: 0.7;
+}
+
+.controlMenu {
+  display: flex;
+  flex-direction: column;
+  flex: 0.3;
+}

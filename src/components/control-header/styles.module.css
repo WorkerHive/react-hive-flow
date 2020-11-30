@@ -1,0 +1,31 @@
+.dropdownMenu{
+  display: flex;
+  flex-direction: column;
+}
+
+.dropdownMenuItem{
+  padding-left: 16px;
+  padding-right: 16px;
+  padding-bottom: 6px;
+  padding-top: 6px;
+}
+
+.controlHeader {
+  background: #fefefe;
+  box-shadow: 0 0 2px 1px rgba(0,0,0,0.08);
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  display: flex;
+  z-index: 9;
+}
+
+.controlHeader > div{
+  padding: 5px;
+  cursor: pointer;
+  border-right: 1px solid #eee;
+}
+
+.controlHeader > div:hover{
+  background: #f4f4f4;
+}
