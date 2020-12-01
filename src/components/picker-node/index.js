@@ -55,7 +55,7 @@ function PickerNode(props){
   return (
 
     <NodeWrapper {...props}>
-
+      <div className={styles['base-node']}>      
           {node && node.data.picked ? [
             <img src={node && node.data && node.data.picked.data.img} />,
             <div className={styles.productInfo}>
@@ -69,7 +69,7 @@ function PickerNode(props){
           ] : (
             <div>Awaiting selection</div>
           )}
-
+      </div>
     </NodeWrapper>
   );
 }

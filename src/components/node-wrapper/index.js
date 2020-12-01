@@ -46,6 +46,8 @@ function NodeWrapper(props){
     }
   ]
 
+  let node = props.editor.nodes.filter((a) => a.id == props.id)
+
   return (
     <div className={styles.nodeWrapper}>
       <Handle 
@@ -65,7 +67,11 @@ function NodeWrapper(props){
             </div>
           )}
         </div>
-      
+        <div className={styles.nodeTeam}>
+            {node && node.length > 0 && node[0].members && node[0].members.map((x) => (
+            <img src={`https://avatars.dicebear.com/api/avataaars/${x}.svg`} />
+          ))}
+        </div>
       <Handle 
         type="source"
         position="bottom" />
