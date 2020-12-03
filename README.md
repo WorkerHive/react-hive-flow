@@ -7,22 +7,97 @@
 ## Install
 
 ```bash
-npm install --save react-hive-flow
+yarn add react-hive-flow
 ```
 
 ## Usage
 
+
+### Editor
+
 ```jsx
 import React, { Component } from 'react'
 
-import MyComponent from 'react-hive-flow'
+import HiveEditor from 'react-hive-flow'
 import 'react-hive-flow/dist/index.css'
 
 class Example extends Component {
   render() {
-    return <MyComponent />
+    return <HiveEditor
+              nodes={[
+                {
+                  id: 'unique key',
+                  data: {
+                    label: 'Label'
+                  },
+                  position: {
+                    x: Int,
+                    y: Int
+                  }
+                }
+              ]}
+              links={[{
+                id: 'unique key 2',
+                source: 'node_id',
+                target: 'node_id',
+                animated: Boolean
+              }]}
+              modalBody={(NodeType, node, editor) => {
+                <div>
+                  <NodeType.modal node={node}/>
+                  {/* misc jsx */}
+                </div>
+              }}
+              onJoinNode={(cb) => {
+                cb(user_id)
+              }}
+              onNodeChange={(nodes) => {
+                //new state of nodes
+              }}
+              onLinkChange={(links) => {
+                //new state of links
+              }} />
   }
 }
+```
+
+### Editor
+
+```
+  let editor = {
+      nodes: props.nodes,
+      links: props.links,
+      exploring: exploring,
+      exploreNode: (id) => opens node in modal for editing 
+      nodeTypes: {nodeKey: Node},
+      updateNode: (id, node_func) => runs node_func(node) from id, expects
+modifications to be made in the function and then the new value for node
+returned,
+      joinNode: (id) => join members of node,
+      addNode: (type, position) => nodeKey and position object,
+      addLink: (from, to) => add link,
+      addChild: (parent_id) => add base node as child of parent
+  }
+```
+
+### Nodes
+
+```
+
+import React from 'react';
+
+export const type = 'nodeKey'  
+
+export function modal(props){
+  //props.node
+  //props.editor
+}
+
+export function node(props){
+  //props.node
+  //props.editor
+}
+
 ```
 
 ## License
