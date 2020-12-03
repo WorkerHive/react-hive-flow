@@ -21,10 +21,11 @@ function NodeWrapper(props){
     {
       icon: <Add />,
       action: () => {
-        var node = props.editor.addNode('baseNode', {
-          x: props.xPos,
-          y: props.yPos + 100
-        })
+        let pos = {
+          x: props.editor.direction == "horizontal" ? props.xPos + 300 : props.xPos,
+          y: props.editor.direction == "horizontal" ? props.yPos : props.yPos + 100
+        }
+        var node = props.editor.addNode('baseNode', pos)
         let link = props.editor.addLink(props.id, node.id)
       }
     },
