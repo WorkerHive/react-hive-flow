@@ -37,6 +37,7 @@ import 'react-hive-flow/dist/index.css'
 class Example extends Component {
   render() {
     return <HiveEditor
+              direction={"vertical" || "horizontal"}
               nodes={[
                 {
                   id: 'unique key',
