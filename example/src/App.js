@@ -9,6 +9,7 @@ const App = () => {
   let [ links, setLinks ] = React.useState([])
 
   return <HiveEditor 
+      direction="horizontal"
       nodes={nodes}
     links={links}
     modalBody={(NodeType, node, editor) => {

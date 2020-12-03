@@ -52,7 +52,7 @@ function NodeWrapper(props){
     <div className={styles.nodeWrapper}>
       <Handle 
         type="target"
-        position="top"
+        position={props.editor.direction == "horizontal" ? "right" : "top"}
         style={{background: "#555"}} />
       
         <div className={styles.nodeWrapperInner}>
@@ -74,7 +74,7 @@ function NodeWrapper(props){
         </div>
       <Handle 
         type="source"
-        position="bottom" />
+        position={props.editor.direction == "horizontal" ? "left" : "bottom"} />
     </div>
   );
 }

@@ -136,6 +136,7 @@ export default function HiveEditor(props) {
   let editor = {
       nodes: props.nodes,
       links: props.links,
+      direction: props.direction || "vertical",
       exploring: exploring,
       exploreNode: exploreNode,
       nodeTypes: props.nodeTypes,
