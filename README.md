@@ -10,6 +10,19 @@
 yarn add react-hive-flow
 ```
 
+## Dev
+
+```
+cd react-hive-flow
+
+yarn start
+
+cd react-hive-flow/example
+
+yarn start
+
+```
+
 ## Usage
 
 
