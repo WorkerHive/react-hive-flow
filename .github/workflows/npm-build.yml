@@ -5,7 +5,9 @@
 name: react-hive-flow building
 on:
   push:
-    branches: [ $default-branch ]
+    branches: [ build-ci-cd ]
+  pull_request:
+    branches: [ build-ci-cd ]
 
 jobs:
   build:
