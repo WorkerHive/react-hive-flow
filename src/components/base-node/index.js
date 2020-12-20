@@ -24,8 +24,11 @@ export const modal = withEditor((props) => {
         fullWidth
         onChange={(e) => {
           props.editor.updateNode(props.node.id, (node) => {
-            node.data.label = e.target.value;
-            return node;
+            return {
+              data: {
+                label: e.target.value
+              }
+            };
           })
         }}
         value={props.node.data.label}
@@ -43,6 +46,7 @@ function BaseNode(props){
   return (
     <NodeWrapper {...props}>
       <textarea
+        className={styles.textarea}
         key={props.id + 'textarea'}
         rows={4}
         placeholder="Node description"
@@ -50,8 +54,11 @@ function BaseNode(props){
         onChange={(e) => {
           //update node value in context
           props.editor.updateNode(props.id, (node) => {
-            node.data.label = e.target.value;
-            return node;
+            return {
+              data: {
+                label: e.target.value
+              }
+            };
           })
         }} />
       <div className={styles['base-node__info']}>

@@ -19,150 +19,110 @@ import * as PickerNode from './components/picker-node';
 import * as ProductNode from './components/product-node';
 import * as CollectorNode from './components/collector-node';
 
+import { withEditor } from './context';
+import HiveProvider from './context/hive-provider';
+import NodeWrapper from './components/node-wrapper';
+import NodePanel from './components/node-panel'
+
+import { v4 as uuidv4 } from 'uuid';
 import { mapStatus } from './style';
 import styles from './styles.module.css'
 
 const uuid = require('uuid')
 
-const onLoad = (reactFlowInst) => {
-  console.debug('=> React Flow loaded')
-  reactFlowInst.fitView();
+
+export {
+  NodePanel,
+  NodeWrapper,
+  withEditor,
+  HiveProvider,
+  BaseNode
 }
 
-export default function HiveEditor(props) {
+
+function HiveEditor(props) {
 
   const [ exploring, setExploring ] = React.useState(null)
+  const [ reactFlowInst, setFlowInst ] = React.useState(null)
 
-  const updateNode = (id, node_func) => {
-    let n = props.nodes.slice()
-    let ix = n.map((x) => x.id).indexOf(id) 
-    if(ix > -1){
-      n[ix] = node_func(n[ix])
-      _setNodes(n)
-    }
+  const onLoad = (reactFlowInst) => {
+    console.debug('=> React Flow loaded')
+    reactFlowInst.fitView();
+    setFlowInst(reactFlowInst)
   }
 
-  const _setNodes = (nodes) => {
-    if(props.onNodeChange){
-      props.onNodeChange(nodes)
-    }
-  }
+  const onDragOver = (event) => {
+    event.preventDefault();
+    event.dataTransfer.dropEffect = 'move';
+  };
 
-  const _setLinks = (links) => {
-    if(props.onLinkChange){
-      props.onLinkChange(links)
-    }
-  }
+  const onDrop = (event) => {
+    event.preventDefault();
+    console.log(event.dataTransfer)
+    const type = event.dataTransfer.getData('application/reactflow');
+    const position = reactFlowInst.project({ x: event.clientX, y: event.clientY - 40 });
 
-  const addChild = (parent_id) => {
-    let parent_node = props.nodes.filter((a) => a.id == parent_id)
-    if(parent_node && parent_node.length > 0){
-      let newPos = {
-        x: parent_node[0].position.x,
-        y: parent_node[0].position.y + 100
-      }
+    const newNode = {
+      id: uuidv4(),
+      type,
+      position,
+      data: { label: `${type} node` },
+    };
 
-      let node = addNode('baseNode', newPos)
-      let link = addLink(parent_id, node.id)
-    }
-  }
- 
-  const addLink = (parent, target) => {
-    let link = {
-      id: uuid.v4(),
-      source: parent,
-      target: target
-    }
-    _setLinks(props.links.concat([link]))
-    return link
-  }
+    console.log(newNode, type)
+    if(props.editor.onNodeAdd) props.editor.onNodeAdd(newNode);
+  };
 
-
-  const addNode = (type, position) => {
-        let id = uuid.v4()
-        let node = {
-          type: type || 'baseNode',
-          id: id,
-          position: position,
-          data: {
-            label: ""
-          }
-        }
-        let n = props.nodes.slice();
-        n.push(node)
-        _setNodes(n)
-        
-        return node;
-  }
-
-  const onElementsRemove = (elementsToRemove) => {
-    let _nodes = elementsToRemove.filter((a) => a.source == null)
-    let _links = elementsToRemove.filter((a) => a.source != null)
-    _nodes = props.nodes.filter((a) => _nodes.map((x) => x.id).indexOf(a.id) < 0);
-    _links = props.links.filter((a) => _links.map((x) => x.id).indexOf(a.id) < 0)
-    _setNodes(_nodes)
-    _setLinks(_links)
-  }
-
+  
   const onConnect = (params) => {
-    addLink(params.source, params.target)
+    props.editor.addLink(params.source, params.target)
   }
 
   const onNodeDrag = (event, node) => {
-    updateNode(node.id, (_node) => {
-      _node.position = node.position
-      return _node
+    console.log("Node drag", event, node)
+    props.editor.updateNode(node.id, (oldNode) => {
+      return {position: node.position};
     })
   }
 
   const joinNode = (node_id) => {
     if(props.onJoinNode){
       props.onJoinNode((user) => {
-        updateNode(node_id, (node) => {
-          if(!node.members) node.members = []
-          if(node.members && !node.members.indexOf(user) > -1)node.members.push(user)
-          return node;
+        props.editor.updateNode(node_id, (node) => {
+          let members = node.members || [];
+          if(!members.indexOf(user) > -1)members.push(user)
+          return {members};
         })
       })
     }
   }
 
-  const exploreNode = (node_id) => {
-    let node = props.nodes.filter((a) => a.id == node_id)[0]
-    console.debug('=> Explore Node', node)
-    setExploring(node)
+  const getNodeTypes = () => {
+
+    let propNodes = {};
+    
+    let nodeTypes = props.editor.nodeTypes || [];
+    for(var i = 0; i < nodeTypes.length; i++){
+      propNodes[nodeTypes[i].type] = nodeTypes[i].node;
+    }
+    
+
+    return Object.assign({}, propNodes)
   }
 
-  let editor = {
-      nodes: props.nodes,
-      links: props.links,
-      direction: props.direction || "vertical",
-      exploring: exploring,
-      exploreNode: exploreNode,
-      nodeTypes: props.nodeTypes,
-      updateNode: updateNode,
-      joinNode: joinNode,
-      addNode: addNode,
-      addLink: addLink,
-      addChild: addChild
-  }
+
+
   return (
-    <EditorContext.Provider value={editor}>
-      <ControlHeader />
+    <div style={{flex: 1, display: 'flex', position: 'relative'}}>
       <ReactFlow
-        elements={mapStatus(props.links, props.nodes)}
-        nodeTypes={{
-          baseNode: BaseNode.node,
-          productNode: ProductNode.node,
-          pickerNode: PickerNode.node,
-          collectorNode: CollectorNode.node,
-          ...(props.nodeTypes || []).map((x) => x.node)
-        }}
+        elements={props.editor.links.concat(props.editor.nodes)}
+        nodeTypes={getNodeTypes()}
         onLoad={onLoad}
         onNodeDragStart={onNodeDrag}
         onNodeDragStop={onNodeDrag}
-        onNodeDrag={onNodeDrag}
-        onElementsRemove={onElementsRemove}
+        onElementsRemove={props.editor.onElementsRemove}
+        onDragOver={onDragOver}
+        onDrop={onDrop}
         onConnect={onConnect}
         snapToGrid={props.snapToGrid || true}
         snapGrid={[15, 15]}>
@@ -175,6 +135,7 @@ export default function HiveEditor(props) {
             return '#eee';
           }}
           nodeColor={(n) => {
+            if(props.statusColors && props.statusColors[n.data.status.toLowerCase()]) return props.statusColors[n.data.status.toLowerCase()]; 
             if(n.style?.background) return n.style.background;
             return '#fff';
           }}
@@ -188,12 +149,14 @@ export default function HiveEditor(props) {
         selected={exploring}>
         {(node) => 
         exploring != null && (
-          props.nodeTypes || []
-        ).concat([BaseNode, ProductNode, PickerNode, CollectorNode])
+          editor.nodeTypes || []
+        )
         .filter((a) => exploring.type == a.type)
           .map((X) => props.modalBody ? props.modalBody(X, exploring, editor) : <X.modal node={exploring} />)[0]
         }
     </ControlModal>
-  </EditorContext.Provider>
+  </div>
   )
 }
+
+export default withEditor(HiveEditor)
