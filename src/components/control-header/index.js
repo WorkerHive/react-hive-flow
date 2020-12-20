@@ -11,7 +11,7 @@ import styles from './styles.module.css';
 function ControlHeader(props){
   const [ anchorEl, setAnchor ] = React.useState(null)
   const [selectedMenu, setSelected ] = React.useState(null)
-
+console.log(props.editor)
   const controlOptions = [ 
     {
       name: "View",
@@ -29,19 +29,7 @@ function ControlHeader(props){
     },
     {
       name: "Add",
-      menu: [{
-        label: "Base",
-        type: "baseNode"
-      }, {
-        label: "Product",
-        type: "productNode"
-      }, {
-        label: "Picker",
-        type: "pickerNode"
-      }, {
-        label: "Collector",
-        type: "collectorNode"
-      }].concat((props.editor.nodeTypes || []).map((x) => ({label: x.type, type: x.type}))).map((x) => (
+      menu: (props.editor.nodeTypes || []).map((x) => ({label: x.type, type: x.type})).map((x) => (
         <MenuItem className={styles.dropdownMenuItem} onClick={() => props.editor.addNode(x.type, {x: 300, y: 300})}>{x.label}</MenuItem>
       ))
     },

@@ -24,3 +24,48 @@
   top: 0;
   cursor: pointer;
 }
+
+.react-flow__handle{
+  width: 10px;
+  height: 10px;
+}
+
+.react-flow__handle-bottom, .react-flow__handle-top, .react-flow__handle-right, .react-flow__handle-left{
+  transition: all ease-in 100ms;
+  width: 8px;
+  height: 8px;
+}
+
+.react-flow__handle-right{
+  right: -5px;
+}
+.react-flow__handle-left{
+  left: -5px;
+}
+
+.react-flow__handle-top{
+  top: -5px;
+}
+.react-flow__handle-bottom{
+  bottom: -5px;
+}
+
+.react-flow__handle-bottom:hover, .react-flow__handle-top:hover, .react-flow__handle-right:hover, .react-flow__handle-left:hover{
+  width: 12px;
+  height: 12px;
+}
+
+.react-flow__handle-top:hover{
+  top: -7px;
+}
+.react-flow__handle-left:hover{
+  left: -7px;
+}
+
+.react-flow__handle-bottom:hover{
+  bottom: -7px;
+}
+.react-flow__handle-right:hover{
+  right: -7px;
+}
+

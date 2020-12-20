@@ -27,8 +27,10 @@
   background: #dfdfdf;
 }
 
-.base-node textarea{
+.textarea{
   flex: 1;
+  outline: none;
+  border: none;
 }
 
 .base-node .base-node__info img{
