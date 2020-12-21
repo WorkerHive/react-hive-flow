@@ -54,8 +54,8 @@ export default function HiveProvider(props){
         let _nodes = elementsToRemove.filter((a) => a.source == null)
         let _links = elementsToRemove.filter((a) => a.source != null)
     
-        if(_nodes.length > 0 && editor.onNodeRemove) props.onNodeRemove(_nodes)
-        if(_links.length > 0 && editor.onLinkRemove) props.onLinkRemove(_links)
+        if(_nodes.length > 0 && editor.onNodeRemove) editor.onNodeRemove(_nodes)
+        if(_links.length > 0 && editor.onLinkRemove) editor.onLinkRemove(_links)
     
       }
 
