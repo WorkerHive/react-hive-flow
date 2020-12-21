@@ -61,7 +61,7 @@ export default function HiveProvider(props){
 
     return (
         <EditorContext.Provider value={editor}>
-            {props.children}
+            {props.children(editor)}
         </EditorContext.Provider>
     )
 }
