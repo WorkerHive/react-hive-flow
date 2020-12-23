@@ -1,5 +1,5 @@
 {
-  "name":"react-hive-flow",
+  "name":"@workerhive/react-hive-flow",
   "version": "1.0.66",
   "description": "Hive Flow maker for React",
   "author": "balbatross",
