@@ -13,13 +13,18 @@ import {
   Visibility
 } from '@material-ui/icons';
 
-import { withEditor } from '../../context';
+import { HiveEditorProps, HiveMapNode, withEditor } from '../../context';
 import NodeWrapper from '../node-wrapper';
 import styles from './styles.module.css';
 
 export const type = "collectorNode"
 
-export const modal = withEditor((props) => {
+export interface CollectorNodeModalProps {
+  editor: HiveEditorProps
+  node: HiveMapNode;
+}
+
+export const modal = withEditor((props : CollectorNodeModalProps) => {
   let selectionNodes = props.editor.links.filter((a) => a.source == props.node.id).map((x) => {
     return props.editor.nodes.filter((a) => a.id == x.target)[0]
   })
@@ -53,7 +58,12 @@ export const modal = withEditor((props) => {
 })
 
 
-function CollectorNode(props){
+export interface CollectorNodeProps {
+  editor: HiveEditorProps
+  id: string;
+}
+
+function CollectorNode(props : CollectorNodeProps){
   const [ menuOpen, openMenu ] = React.useState(false)
 
 

@@ -13,7 +13,7 @@
     "lodash": "^4.17.20",
     "react": "link:../node_modules/react",
     "react-dom": "link:../node_modules/react-dom",
-    "react-hive-flow": "link:..",
+    "@workerhive/react-hive-flow": "link:..",
     "react-scripts": "link:../node_modules/react-scripts"
   },
   "devDependencies": {

@@ -15,12 +15,19 @@ import {
 
 import NodeWrapper from '../node-wrapper';
 
-import { withEditor } from '../../context';
+import { HiveMapNode, HiveEditorProps, withEditor } from '../../context';
 import styles from './styles.module.css';
 
 export const type = "pickerNode"
 
-export const modal = withEditor((props) => {
+export interface PickerNodeModalProps {
+  editor: HiveEditorProps
+  node: HiveMapNode
+  updateNode: Function;
+
+}
+
+export const modal = withEditor((props: PickerNodeModalProps) => {
   let selectionNodes = props.editor.links.filter((a) => a.source == props.node.id).map((x) => {
     return props.editor.nodes.filter((a) => a.id == x.target)[0]
   })
@@ -32,7 +39,7 @@ export const modal = withEditor((props) => {
             <ListItem button onClick={() => {
               if(props.node && props.node.id){
                 console.log(props.node)
-                  props.editor.updateNode(props.node.id, (node) => {
+                  props.editor.updateNode(props.node.id, (node : HiveMapNode) => {
                     node.data.picked = x;
                     return node;
                 
@@ -45,8 +52,12 @@ export const modal = withEditor((props) => {
   );
 })
 
+export interface PickerNodeProps {
+  id: string;
+  editor: HiveEditorProps
+}
 
-function PickerNode(props){
+function PickerNode(props : PickerNodeProps){
   const [ menuOpen, openMenu ] = React.useState(false)
 
   console.log(props)

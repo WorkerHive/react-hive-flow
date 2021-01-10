@@ -9,11 +9,19 @@ import {
   Button
 } from '@material-ui/core';
 
-import { withEditor } from '../../context';
+import { HiveEditorProps, HiveMapNode, withEditor } from '../../context';
 
 import styles from './styles.module.css';
 
-function ControlModal(props){
+export interface ControlModalProps {
+  editor: HiveEditorProps
+  selected: HiveMapNode;
+  open: boolean;
+  children:any;
+  onClose: (e:React.MouseEvent) => void;
+}
+
+function ControlModal(props : ControlModalProps){
 
   const controlMenu = [
     {

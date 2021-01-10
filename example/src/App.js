@@ -1,6 +1,6 @@
 import React from 'react'
 
-import HiveEditor, { BaseNode, HiveProvider, withEditor, NodePanel } from 'react-hive-flow'
+import HiveEditor, { BaseNode, HiveProvider, withEditor, NodePanel } from '@workerhive/react-hive-flow'
 import { merge } from 'lodash';
 import 'react-hive-flow/dist/index.css'
 import './index.css';

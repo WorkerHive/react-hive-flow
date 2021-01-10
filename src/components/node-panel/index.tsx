@@ -1,13 +1,17 @@
 import React from 'react';
 
 import {Paper, Typography} from '@material-ui/core';
-import { withEditor } from '../../context';
+import { HiveEditorProps, HiveMapNodeType, withEditor } from '../../context';
 
 import styles from './styles.module.css';
 
-function NodePanel(props){
+export interface NodePanelProps {
+    editor: HiveEditorProps    
+}
 
-    const onDragStart = (event, nodeType) => {
+function NodePanel(props : NodePanelProps){
+
+    const onDragStart = (event: any, nodeType : any) => {
         console.log('drag start ', nodeType)
         if(event){
             event.dataTransfer.setData('application/reactflow', nodeType)
@@ -19,7 +23,7 @@ function NodePanel(props){
         <Paper 
             className={styles['node-panel']}>
             <Typography variant="h6">Available Nodes</Typography>
-            {(props.editor.nodeTypes || []).map((x) => ({node: x.node, label: x.type, type: x.type})).map((X) => (
+            {(props.editor.nodeTypes).map((x : HiveMapNodeType) => ({node: x.node, label: x.type, type: x.type})).map((X) => (
         <div 
             draggable
             className={styles.dndnode} 

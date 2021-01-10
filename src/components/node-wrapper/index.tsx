@@ -7,15 +7,24 @@ import {
   Create,
   Visibility
 } from '@material-ui/icons';
-
-import Tappable from 'react-tappable';
-
-import { withEditor } from '../../context';
-import { Handle } from '@thetechcompany/react-flow-renderer';
+import { HiveEditorProps, HiveMapNode, withEditor } from '../../context';
+import { Handle, Position } from '@thetechcompany/react-flow-renderer';
 
 import styles from './styles.module.css';
 
-function NodeWrapper(props){
+const Tappable = require('react-tappable');
+
+export interface NodeWrapperProps {
+  editor: HiveEditorProps;
+  id: string;
+  xPos: number;
+  yPos: number;
+  data: any;
+  selected: any;
+  children: any;
+}
+
+function NodeWrapper(props : NodeWrapperProps){
 
   const nodeMenu = [
     {
@@ -32,7 +41,7 @@ function NodeWrapper(props){
     {
       icon: (props.data && props.data.status != 'COMPLETE') ? <Done /> : <Clear />,
       action: () => {
-        props.editor.updateNode(props.id, (node) => {
+        props.editor.updateNode(props.id, (node : HiveMapNode) => {
     
           return {
             data: {
@@ -50,7 +59,7 @@ function NodeWrapper(props){
     }
   ]
 
-  let node = props.editor.nodes.filter((a) => a.id == props.id)[0] || {}
+  let node : HiveMapNode = props.editor.nodes.filter((a : HiveMapNode) => a.id == props.id)[0] 
   let status = (node.data && node.data.status) || "NEW"
   let color = props.editor.statusColors[status.toLowerCase()]
 
@@ -60,7 +69,7 @@ function NodeWrapper(props){
       {node.id && <Handle 
         className={styles[`react-flow__handle-${props.editor.direction == "horizontal" ? 'left' : 'top'}`]}
         type="target"
-        position={props.editor.direction == "horizontal" ? "left" : "top"}
+        position={props.editor.direction == "horizontal" ? Position.Left  : Position.Top}
         style={{background: "#555"}} />}
       
         <div className={styles.nodeWrapperInner}>
@@ -76,14 +85,14 @@ function NodeWrapper(props){
           )}
         </div>
         <div className={styles.nodeTeam}>
-            {node.members && node.members.map((x) => (
+            {node.members && node.members.map((x : any) => (
             <img src={`https://avatars.dicebear.com/api/avataaars/${x}.svg`} />
           ))}
         </div>
       {node.id && <Handle 
         className={styles[`react-flow__handle-${props.editor.direction == "horizontal" ? "right" : "bottom"}`]}
         type="source"
-        position={props.editor.direction == "horizontal" ? "right" : "bottom"} />}
+        position={props.editor.direction == "horizontal" ? Position.Right : Position.Bottom} />}
     </div>
   );
 }
