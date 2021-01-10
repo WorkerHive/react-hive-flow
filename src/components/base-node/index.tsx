@@ -11,19 +11,24 @@ import {
   Visibility
 } from '@material-ui/icons';
 
-import { withEditor } from '../../context';
+import { withEditor, HiveEditorProps, HiveMapNode } from '../../context';
 import NodeWrapper from '../node-wrapper';
 
 import styles from './styles.module.css';
 
 export const type = "baseNode"
 
-export const modal = withEditor((props) => {
+export interface BaseNodeModalProps{
+  editor: HiveEditorProps
+  node: HiveMapNode;
+}
+
+export const modal = withEditor((props : BaseNodeModalProps) => {
   return (
       <TextField 
         fullWidth
         onChange={(e) => {
-          props.editor.updateNode(props.node.id, (node) => {
+          props.editor.updateNode(props.node.id, (node : HiveMapNode) => {
             return {
               data: {
                 label: e.target.value
@@ -38,8 +43,13 @@ export const modal = withEditor((props) => {
   );
 })
 
+export interface BaseNodeProps {
+  editor: HiveEditorProps
+  id: string;
+}
 
-function BaseNode(props){
+
+function BaseNode(props : BaseNodeProps){
   const [ menuOpen, openMenu ] = React.useState(false)
 
   let node = (props.editor && props.editor.nodes || []).filter((a) => a.id == props.id)
@@ -53,7 +63,7 @@ function BaseNode(props){
         value={node.length > 0 ? node[0].data.label : ""}
         onChange={(e) => {
           //update node value in context
-          props.editor.updateNode(props.id, (node) => {
+          props.editor.updateNode(props.id, (node : HiveMapNode) => {
             return {
               data: {
                 label: e.target.value

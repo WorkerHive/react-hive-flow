@@ -1,4 +1,5 @@
 import React from 'react'
+
 import ReactFlow, {
   removeElements,
   addEdge,
@@ -20,7 +21,7 @@ import * as ProductNode from './components/product-node';
 import * as CollectorNode from './components/collector-node';
 
 import { withEditor } from './context';
-import HiveProvider from './context/hive-provider';
+import { HiveProvider } from './context/hive-provider';
 import NodeWrapper from './components/node-wrapper';
 import NodePanel from './components/node-panel'
 
@@ -36,27 +37,34 @@ export {
   NodeWrapper,
   withEditor,
   HiveProvider,
-  BaseNode
+  BaseNode,
 }
 
+export interface HiveEditorProps {
+  editor: any;
+  onJoinNode: Function;
+  snapToGrid: boolean;
+  statusColors: any;
+  modalBody: any;
+}
 
-function HiveEditor(props) {
+const HiveEditor : React.FC<HiveEditorProps> = (props) => {
 
-  const [ exploring, setExploring ] = React.useState(null)
-  const [ reactFlowInst, setFlowInst ] = React.useState(null)
+  const [ exploring, setExploring ] = React.useState<any>()
+  const [ reactFlowInst, setFlowInst ] = React.useState<any>()
 
-  const onLoad = (reactFlowInst) => {
+  const onLoad = (reactFlowInst : any) => {
     console.debug('=> React Flow loaded')
     reactFlowInst.fitView();
     setFlowInst(reactFlowInst)
   }
 
-  const onDragOver = (event) => {
+  const onDragOver = (event: any) => {
     event.preventDefault();
     event.dataTransfer.dropEffect = 'move';
   };
 
-  const onDrop = (event) => {
+  const onDrop = (event: any) => {
     event.preventDefault();
     console.log(event.dataTransfer)
     const type = event.dataTransfer.getData('application/reactflow');
@@ -74,23 +82,23 @@ function HiveEditor(props) {
   };
 
   
-  const onConnect = (params) => {
+  const onConnect = (params: any) => {
     props.editor.addLink(params.source, params.target)
   }
 
-  const onNodeDrag = (event, node) => {
+  const onNodeDrag = (event : any, node : any) => {
     console.log("Node drag", event, node)
-    props.editor.updateNode(node.id, (oldNode) => {
+    props.editor.updateNode(node.id, (oldNode : any) => {
       return {position: node.position};
     })
   }
 
-  const joinNode = (node_id) => {
+  const joinNode = (node_id : string) => {
     if(props.onJoinNode){
-      props.onJoinNode((user) => {
-        props.editor.updateNode(node_id, (node) => {
+      props.onJoinNode((user : any) => {
+        props.editor.updateNode(node_id, (node : any) => {
           let members = node.members || [];
-          if(!members.indexOf(user) > -1)members.push(user)
+          if(!(members.indexOf(user) > -1)) members.push(user)
           return {members};
         })
       })
@@ -99,7 +107,7 @@ function HiveEditor(props) {
 
   const getNodeTypes = () => {
 
-    let propNodes = {};
+    let propNodes  : any= {};
     
     let nodeTypes = props.editor.nodeTypes || [];
     for(var i = 0; i < nodeTypes.length; i++){
@@ -128,7 +136,7 @@ function HiveEditor(props) {
         snapGrid={[15, 15]}>
         <MiniMap
           nodeStrokeColor={(n) => {
-            if (n.style?.background) return n.style.background;
+            if (n.style?.background) return `${n.style.background}`;
             if (n.type === 'input') return '#0041d0';
             if (n.type === 'output') return '#ff0072';
             if (n.type === 'default') return '#1a192b';
@@ -147,12 +155,12 @@ function HiveEditor(props) {
         onClose={() => setExploring(null)}
         open={exploring != null} 
         selected={exploring}>
-        {(node) => 
+        {(node : any) => 
         exploring != null && (
-          editor.nodeTypes || []
+         props.editor.nodeTypes || []
         )
-        .filter((a) => exploring.type == a.type)
-          .map((X) => props.modalBody ? props.modalBody(X, exploring, editor) : <X.modal node={exploring} />)[0]
+        .filter((a : any) => exploring!.type == a.type)
+          .map((X : any) => props.modalBody ? props.modalBody(X, exploring, props.editor) : <X.modal node={exploring} />)[0]
         }
     </ControlModal>
   </div>

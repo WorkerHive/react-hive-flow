@@ -1,9 +1,15 @@
 import React from 'react';
 import * as BaseNode from '../components/base-node'
-import { EditorContext } from './';
+import { EditorContext, HiveMapPosition } from '.';
 import { v4 as uuidv4} from 'uuid';
 
-export default function HiveProvider(props){
+export interface HiveProviderProps {
+    store: any;
+    children: any;
+}
+
+
+export const HiveProvider : React.FC<HiveProviderProps> = (props) => {
 
     let nodeTypes = (props.store.nodeTypes || []).concat([BaseNode])
     let editor = {
@@ -11,7 +17,7 @@ export default function HiveProvider(props){
         nodeTypes: nodeTypes
     }
 
-    editor.addLink = (parent, target) => {
+    editor.addLink = (parent : string, target : string) => {
         let link = {
           id: uuidv4(),
           source: parent,
@@ -23,7 +29,7 @@ export default function HiveProvider(props){
         return link
     }
 
-    editor.addNode = (type, position) => {
+    editor.addNode = (type : string, position : HiveMapPosition) => {
         let id = uuidv4()
         let node = {
           type: type || 'baseNode',
@@ -41,18 +47,18 @@ export default function HiveProvider(props){
         return node;
     }
 
-    editor.updateNode = (id, node_func) => {
+    editor.updateNode = (id : string, node_func : Function) => {
         let n = editor.nodes.slice()
-        let ix = n.map((x) => x.id).indexOf(id) 
+        let ix = n.map((x : any) => x.id).indexOf(id) 
         if(ix > -1){
             let updated = node_func(n[ix])
             if(editor.onNodeUpdate) editor.onNodeUpdate(id, updated)
         }
     }
 
-    editor.onElementsRemove =  (elementsToRemove) => {
-        let _nodes = elementsToRemove.filter((a) => a.source == null)
-        let _links = elementsToRemove.filter((a) => a.source != null)
+    editor.onElementsRemove =  (elementsToRemove : any) => {
+        let _nodes = elementsToRemove.filter((a : any) => a.source == null)
+        let _links = elementsToRemove.filter((a : any) => a.source != null)
     
         if(_nodes.length > 0 && editor.onNodeRemove) editor.onNodeRemove(_nodes)
         if(_links.length > 0 && editor.onLinkRemove) editor.onLinkRemove(_links)

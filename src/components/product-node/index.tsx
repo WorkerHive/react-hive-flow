@@ -12,16 +12,21 @@ import {
 } from '@material-ui/icons';
 
 import NodeWrapper from '../node-wrapper';
-import { withEditor } from '../../context';
+import { HiveEditorProps, withEditor } from '../../context';
 import styles from './styles.module.css';
 
 export const type = "productNode"
 
-export const modal = withEditor((props) => {
+export interface ProductNodeModalProps {
+  node: any;
+  editor: HiveEditorProps;
+}
+
+export const modal = withEditor((props: ProductNodeModalProps) => {
   return [
     <TextField
       onChange={(e) => {
-        props.editor.updateNode(props.node.id, (node) => {
+        props.editor.updateNode(props.node.id, (node: any) => {
           node.data.label = e.target.value;
           return node;
         })
@@ -31,7 +36,7 @@ export const modal = withEditor((props) => {
         label="Product Name"  />,
     <TextField
       onChange={(e) => {
-        props.editor.updateNode(props.node.id, (node) => {
+        props.editor.updateNode(props.node.id, (node: any) => {
           node.data.price = e.target.value;
           return node;
         })  
@@ -41,7 +46,7 @@ export const modal = withEditor((props) => {
         label="Product Price" />,
     <TextField
       onChange={(e) => {
-        props.editor.updateNode(props.node.id, (node) => {
+        props.editor.updateNode(props.node.id, (node: any) => {
           node.data.img = e.target.value
           return node;
         })
@@ -52,11 +57,15 @@ export const modal = withEditor((props) => {
   ];
 })
 
+export interface ProductNodeProps {
+  editor: HiveEditorProps;
+  id: any;
+}
 
-function ProductNode(props){
+function ProductNode(props : ProductNodeProps){
   const [ menuOpen, openMenu ] = React.useState(false)
 
-  let node = (props.editor && props.editor.nodes || []).filter((a) => a.id == props.id)[0]
+  let node = (props.editor && props.editor.nodes || []).filter((a: any) => a.id == props.id)[0]
 
   return (
     <NodeWrapper {...props}>

@@ -4,14 +4,18 @@ import {
   MenuItem
 } from '@material-ui/core';
 
-import { withEditor } from '../../context';
+import { HiveMapNodeType, HiveEditorProps, withEditor } from '../../context';
 
 import styles from './styles.module.css';
 
-function ControlHeader(props){
-  const [ anchorEl, setAnchor ] = React.useState(null)
-  const [selectedMenu, setSelected ] = React.useState(null)
-console.log(props.editor)
+export interface ControlHeaderProps {
+  editor: HiveEditorProps;
+}
+
+function ControlHeader(props : ControlHeaderProps){
+  const [ anchorEl, setAnchor ] = React.useState<any>()
+  const [selectedMenu, setSelected ] = React.useState<any>()
+
   const controlOptions = [ 
     {
       name: "View",
@@ -29,7 +33,7 @@ console.log(props.editor)
     },
     {
       name: "Add",
-      menu: (props.editor.nodeTypes || []).map((x) => ({label: x.type, type: x.type})).map((x) => (
+      menu: (props.editor.nodeTypes).map((x : HiveMapNodeType) => ({label: x.type, type: x.type})).map((x : any) => (
         <MenuItem className={styles.dropdownMenuItem} onClick={() => props.editor.addNode(x.type, {x: 300, y: 300})}>{x.label}</MenuItem>
       ))
     },
@@ -44,7 +48,7 @@ console.log(props.editor)
   return (
     <div className={styles.controlHeader}>
       {controlOptions.map((x) => (
-        <div onClick={(e) => {
+        <div onClick={(e : React.MouseEvent) => {
           setAnchor(e.currentTarget)
           setSelected(x)
         }}>
