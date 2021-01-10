@@ -1,8 +1,8 @@
 import React from 'react'
 
-import HiveEditor, { HiveProvider, NodePanel } from '@workerhive/react-hive-flow'
+import { Editor, HiveProvider, NodePanel } from '@workerhive/hive-flow'
 import { merge } from 'lodash';
-import 'react-hive-flow/dist/index.css'
+import '@workerhive/hive-flow/index.css'
 import './index.css';
 
 const App = () => {
@@ -23,6 +23,8 @@ const App = () => {
   let [ links, setLinks ] = React.useState([])
 
   return (
+    <>
+    test
     <HiveProvider store={{
       nodes: nodes,
       links: links,
@@ -43,7 +45,8 @@ const App = () => {
 
       },
   }}>
-    <HiveEditor 
+    test
+    <Editor 
       modalBody={(NodeType, node, editor) => {
         return (
           <div className="hive-modal">
@@ -56,8 +59,10 @@ const App = () => {
       }}
 
     />
+    
     <NodePanel />
-    </HiveProvider>)
+    </HiveProvider>
+    </>)
 }
 
 export default App

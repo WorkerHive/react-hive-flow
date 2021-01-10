@@ -5,6 +5,7 @@
 
 .nodeWrapper{
   background: inherit;
+  margin-bottom: 8px;
   box-shadow: 0px 7px 10px -5px gray;
   border-radius: 8px;
   padding: 8px;

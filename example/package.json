@@ -10,10 +10,10 @@
     "eject": "node ../node_modules/react-scripts/bin/react-scripts.js eject"
   },
   "dependencies": {
+    "@workerhive/hive-flow": "link:../dist",
     "lodash": "^4.17.20",
     "react": "link:../node_modules/react",
     "react-dom": "link:../node_modules/react-dom",
-    "@workerhive/react-hive-flow": "link:../dist",
     "react-scripts": "link:../node_modules/react-scripts"
   },
   "devDependencies": {

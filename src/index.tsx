@@ -68,8 +68,9 @@ const HiveEditor : React.FC<HiveEditorProps> = (props) => {
     event.preventDefault();
     console.log(event.dataTransfer)
     const type = event.dataTransfer.getData('application/reactflow');
-    const position = reactFlowInst.project({ x: event.clientX, y: event.clientY - 40 });
-
+    let position = reactFlowInst.project({ x: event.clientX, y: event.clientY });
+    position.x -= 100
+    position.y -= 40
     const newNode = {
       id: uuidv4(),
       type,
@@ -167,4 +168,4 @@ const HiveEditor : React.FC<HiveEditorProps> = (props) => {
   )
 }
 
-export default withEditor(HiveEditor)
+export const Editor = withEditor(HiveEditor)

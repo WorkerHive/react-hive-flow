@@ -59,14 +59,14 @@ function NodeWrapper(props : NodeWrapperProps){
     }
   ]
 
-  let node : HiveMapNode | null = props.editor.nodes.filter((a : HiveMapNode) => a.id == props.id)[0] 
+  let node : HiveMapNode | null = props.editor.nodes.filter((a : HiveMapNode) => a.id == props.id)[0] || {} 
   let status = (node && node.data && node.data.status) || "NEW"
   let color = props.editor.statusColors![status.toLowerCase()]
 
   return (
-    <div style={{background: color || 'gray', pointerEvents: node.id ? 'all' : 'none'}} className={styles.nodeWrapper}>
+    <div style={{background: color || 'gray', pointerEvents: node && node.id ? 'all' : 'none'}} className={styles.nodeWrapper}>
       
-      {node.id && <Handle 
+      {node && node.id && <Handle 
         className={styles[`react-flow__handle-${props.editor.direction == "horizontal" ? 'left' : 'top'}`]}
         type="target"
         position={props.editor.direction == "horizontal" ? Position.Left  : Position.Top}
@@ -89,7 +89,7 @@ function NodeWrapper(props : NodeWrapperProps){
             <img src={`https://avatars.dicebear.com/api/avataaars/${x}.svg`} />
           ))}
         </div>
-      {node.id && <Handle 
+      {node && node.id && <Handle 
         className={styles[`react-flow__handle-${props.editor.direction == "horizontal" ? "right" : "bottom"}`]}
         type="source"
         position={props.editor.direction == "horizontal" ? Position.Right : Position.Bottom} />}

@@ -1744,7 +1744,7 @@
     "@webassemblyjs/wast-parser" "1.8.5"
     "@xtuc/long" "4.2.2"
 
-"@workerhive/react-hive-flow@link:../dist":
+"@workerhive/hive-flow@link:../dist":
   version "0.0.0"
   uid ""
 
@@ -3606,6 +3606,10 @@ dir-glob@2.0.0:
   dependencies:
     arrify "^1.0.1"
     path-type "^3.0.0"
+
+"dist@link:../dist/":
+  version "0.0.0"
+  uid ""
 
 dns-equal@^1.0.0:
   version "1.0.0"

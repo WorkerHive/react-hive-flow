@@ -2,6 +2,7 @@ import React from 'react';
 import * as BaseNode from '../components/base-node'
 import { EditorContext, HiveMapPosition } from '.';
 import { v4 as uuidv4} from 'uuid';
+import { HiveEditorProps } from '../../dist/src/context';
 
 export interface HiveProviderProps {
     store: any;
@@ -67,7 +68,7 @@ export const HiveProvider : React.FC<HiveProviderProps> = (props) => {
 
     return (
         <EditorContext.Provider value={editor}>
-            {props.children(editor)}
+            {props.children}
         </EditorContext.Provider>
     )
 }
