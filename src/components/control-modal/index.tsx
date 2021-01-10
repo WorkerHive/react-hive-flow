@@ -27,7 +27,7 @@ function ControlModal(props : ControlModalProps){
     {
       label: "Join",
       action: () => {
-        props.editor.joinNode(props.selected.id)
+        props.editor.joinNode!(props.selected.id)
       }
     },
     {

@@ -34,14 +34,14 @@ function NodeWrapper(props : NodeWrapperProps){
           x: props.editor.direction == "horizontal" ? props.xPos + 300 : props.xPos,
           y: props.editor.direction == "horizontal" ? props.yPos : props.yPos + 100
         }
-        var node = props.editor.addNode('baseNode', pos)
-        let link = props.editor.addLink(props.id, node.id)
+        var node = props.editor.addNode!('baseNode', pos)
+        let link = props.editor.addLink!(props.id, node.id)
       }
     },
     {
       icon: (props.data && props.data.status != 'COMPLETE') ? <Done /> : <Clear />,
       action: () => {
-        props.editor.updateNode(props.id, (node : HiveMapNode) => {
+        props.editor.updateNode!(props.id, (node : HiveMapNode) => {
     
           return {
             data: {
@@ -54,14 +54,14 @@ function NodeWrapper(props : NodeWrapperProps){
     {
       icon: <Create />,
       action: () => {
-        props.editor.exploreNode(props.id)
+        props.editor.exploreNode!(props.id)
       }
     }
   ]
 
-  let node : HiveMapNode = props.editor.nodes.filter((a : HiveMapNode) => a.id == props.id)[0] 
-  let status = (node.data && node.data.status) || "NEW"
-  let color = props.editor.statusColors[status.toLowerCase()]
+  let node : HiveMapNode | null = props.editor.nodes.filter((a : HiveMapNode) => a.id == props.id)[0] 
+  let status = (node && node.data && node.data.status) || "NEW"
+  let color = props.editor.statusColors![status.toLowerCase()]
 
   return (
     <div style={{background: color || 'gray', pointerEvents: node.id ? 'all' : 'none'}} className={styles.nodeWrapper}>

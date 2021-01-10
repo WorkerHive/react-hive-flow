@@ -28,7 +28,7 @@ export const modal = withEditor((props : BaseNodeModalProps) => {
       <TextField 
         fullWidth
         onChange={(e) => {
-          props.editor.updateNode(props.node.id, (node : HiveMapNode) => {
+          props.editor.updateNode!(props.node.id, (node : HiveMapNode) => {
             return {
               data: {
                 label: e.target.value
@@ -63,7 +63,7 @@ function BaseNode(props : BaseNodeProps){
         value={node.length > 0 ? node[0].data.label : ""}
         onChange={(e) => {
           //update node value in context
-          props.editor.updateNode(props.id, (node : HiveMapNode) => {
+          props.editor.updateNode!(props.id, (node : HiveMapNode) => {
             return {
               data: {
                 label: e.target.value

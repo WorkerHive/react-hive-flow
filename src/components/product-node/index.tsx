@@ -26,7 +26,7 @@ export const modal = withEditor((props: ProductNodeModalProps) => {
   return [
     <TextField
       onChange={(e) => {
-        props.editor.updateNode(props.node.id, (node: any) => {
+        props.editor.updateNode!(props.node.id, (node: any) => {
           node.data.label = e.target.value;
           return node;
         })
@@ -36,7 +36,7 @@ export const modal = withEditor((props: ProductNodeModalProps) => {
         label="Product Name"  />,
     <TextField
       onChange={(e) => {
-        props.editor.updateNode(props.node.id, (node: any) => {
+        props.editor.updateNode!(props.node.id, (node: any) => {
           node.data.price = e.target.value;
           return node;
         })  
@@ -46,7 +46,7 @@ export const modal = withEditor((props: ProductNodeModalProps) => {
         label="Product Price" />,
     <TextField
       onChange={(e) => {
-        props.editor.updateNode(props.node.id, (node: any) => {
+        props.editor.updateNode!(props.node.id, (node: any) => {
           node.data.img = e.target.value
           return node;
         })

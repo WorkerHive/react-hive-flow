@@ -39,7 +39,7 @@ export const modal = withEditor((props: PickerNodeModalProps) => {
             <ListItem button onClick={() => {
               if(props.node && props.node.id){
                 console.log(props.node)
-                  props.editor.updateNode(props.node.id, (node : HiveMapNode) => {
+                  props.editor.updateNode!(props.node.id, (node : HiveMapNode) => {
                     node.data.picked = x;
                     return node;
                 

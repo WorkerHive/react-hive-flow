@@ -23,7 +23,7 @@ function NodePanel(props : NodePanelProps){
         <Paper 
             className={styles['node-panel']}>
             <Typography variant="h6">Available Nodes</Typography>
-            {(props.editor.nodeTypes).map((x : HiveMapNodeType) => ({node: x.node, label: x.type, type: x.type})).map((X) => (
+            {(props.editor.nodeTypes!).map((x : HiveMapNodeType) => ({node: x.node, label: x.type, type: x.type})).map((X) => (
         <div 
             draggable
             className={styles.dndnode} 

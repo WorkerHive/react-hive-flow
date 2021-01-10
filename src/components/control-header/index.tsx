@@ -33,8 +33,8 @@ function ControlHeader(props : ControlHeaderProps){
     },
     {
       name: "Add",
-      menu: (props.editor.nodeTypes).map((x : HiveMapNodeType) => ({label: x.type, type: x.type})).map((x : any) => (
-        <MenuItem className={styles.dropdownMenuItem} onClick={() => props.editor.addNode(x.type, {x: 300, y: 300})}>{x.label}</MenuItem>
+      menu: (props.editor.nodeTypes!).map((x : HiveMapNodeType) => ({label: x.type, type: x.type})).map((x : any) => (
+        <MenuItem className={styles.dropdownMenuItem} onClick={() => props.editor.addNode!(x.type, {x: 300, y: 300})}>{x.label}</MenuItem>
       ))
     },
     {
