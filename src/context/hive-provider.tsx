@@ -1,8 +1,7 @@
 import React from 'react';
 import * as BaseNode from '../components/base-node'
-import { EditorContext, HiveMapPosition } from '.';
+import { EditorContext, HiveMapPosition, HiveEditorProps } from '.';
 import { v4 as uuidv4} from 'uuid';
-import { HiveEditorProps } from '../../dist/src/context';
 
 export interface HiveProviderProps {
     store: any;
