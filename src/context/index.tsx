@@ -10,6 +10,12 @@ export interface HiveEditorProps {
   statusColors?: Record<string, any>;
   addNode?: (type: string, position: HiveMapPosition) => HiveMapNode;
   addLink?: (source: string, target: string) => HiveMapLink;
+  onNodeUpdate?: Function;
+  onLinkAdd?: Function;
+  onNodeAdd?: Function;
+  onLinkRemove?: Function;
+  onNodeRemove?: Function;
+  onElementsRemove?: Function;
   exploreNode?: (id: string) => void
   joinNode?: (id: string) => void;
 }
@@ -18,14 +24,14 @@ export interface HiveMapNode {
   id: string;
   type: string;
   data: any;
-  style: any;
+  style?: any;
   position: HiveMapPosition;
-  members: Array<string>
+  members?: Array<string>
 }
 
 export interface HiveMapNodeType {
   type: string;
-  label: string;
+  label?: string;
   node: React.FC;
   modal: React.FC;
 }

@@ -7,8 +7,7 @@
     "allowJs": true,
     "jsx": "react",
     "declaration": true,                   /* Specify module code generation: 'none', 'commonjs', 'amd', 'system', 'umd', 'es2015', 'es2020', or 'ESNext'. */
-    "sourceMap": true,
-    "sourceRoot": "src",
+    "sourceMap": true, 
     "outDir": "dist/",
     "removeComments": true,
     /* Strict Type-Checking Options */
@@ -52,5 +51,6 @@
     /* Advanced Options */
     "forceConsistentCasingInFileNames": true  /* Disallow inconsistently-cased references to the same file. */
   },
-  "exclude": ["example/"]
+  "include": ["src"],
+  "exclude": ["example/", "node_modules", "dist", "rollup.config.js"]
 }

@@ -4,7 +4,7 @@ import { EditorContext, HiveMapPosition, HiveEditorProps } from '.';
 import { v4 as uuidv4} from 'uuid';
 
 export interface HiveProviderProps {
-    store: any;
+    store: HiveEditorProps;
     children: any;
 }
 
