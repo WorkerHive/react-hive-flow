@@ -20,7 +20,7 @@ import * as PickerNode from './components/picker-node';
 import * as ProductNode from './components/product-node';
 import * as CollectorNode from './components/collector-node';
 
-import { withEditor } from './context';
+import { useEditor, withEditor } from './context';
 import { HiveProvider } from './context/hive-provider';
 import NodeWrapper from './components/node-wrapper';
 import NodePanel from './components/node-panel'
@@ -36,6 +36,7 @@ export {
   NodePanel,
   NodeWrapper,
   withEditor,
+  useEditor,
   HiveProvider,
   BaseNode,
 }

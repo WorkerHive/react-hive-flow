@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 const { withContext } = require('with-context')
 
 export interface HiveEditorProps {
@@ -51,5 +51,10 @@ export const EditorContext = React.createContext<HiveEditorProps>({
   nodes: [],
   links: []
 })
+
+export const useEditor = () => {
+  const context = useContext(EditorContext)
+  return context;
+}
 
 export const withEditor = withContext(EditorContext, 'editor')
